@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBill - Simple Invoice Generator</title>
+
+    <!-- SEO Enhancements -->
+    <meta name="description" content="QuickBill is a simple, fast, and clean invoice generator for small businesses. Create and download professional invoices instantly.">
+    <meta name="keywords" content="invoice generator, quickbill, billing system, instant invoice, business tools">
+    <meta name="author" content="QuickBill">
+
+    <!-- Social Media Preview -->
+    <meta property="og:title" content="QuickBill - Simple Invoice Generator">
+    <meta property="og:description" content="Create professional invoices instantly. No signup required.">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" href="ChatGPT Image Nov 16, 2025, 08_54_29 PM.png">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PDF Library -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Mobile Responsiveness Boost -->
+    <meta name="theme-color" content="#0a2a6b">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>QuickBill</h2>
+            </div>
+
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#generator" class="nav-link">Invoice Generator</a>
+            </div>
+
+            <button class="hamburger" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="home-section">
+        <div class="container">
+            <div class="hero">
+                <h1>Simple, Fast & Clean Invoicing</h1>
+                <p>QuickBill helps small businesses create professional invoices in seconds. No signup required.</p>
+                <a href="#generator" class="cta-button">Create Your First Invoice</a>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Generate invoices in under 30 seconds with our streamlined interface.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">💼</div>
+                    <h3>Professional</h3>
+                    <p>Create clean, professional invoices that build trust with your clients.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">📱</div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Invoice Generator Section -->
+    <section id="generator" class="generator-section">
+        <div class="container">
+            <h2>Invoice Generator</h2>
+            <p class="section-subtitle">Fill in the details below to create your invoice</p>
+            
+            <div class="generator-container">
+                <!-- Input Form -->
+                <div class="input-section" aria-label="Invoice Form">
+                    <div class="form-group">
+                        <label for="businessName">Your Business Name</label>
+                        <input type="text" id="businessName" placeholder="Enter your business name" autocomplete="organization">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerName">Customer Name</label>
+                        <input type="text" id="customerName" placeholder="Enter customer name" autocomplete="name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="invoiceNumber">Invoice Number</label>
+                        <input type="text" id="invoiceNumber" placeholder="e.g., INV-001">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="invoiceDate">Invoice Date</label>
+                        <input type="date" id="invoiceDate">
+                    </div>
+                    
+                    <h3>Add Items</h3>
+                    
+                    <div class="item-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="itemName">Item Name</label>
+                                <input type="text" id="itemName" placeholder="Product or service name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" id="quantity" min="1" value="1">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="price">Price (KSH)</label>
+                                <input type="number" id="price" min="0" step="0.01" placeholder="0.00">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tax">Tax (%)</label>
+                                <input type="number" id="tax" min="0" step="0.01" value="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="discount">Discount (KSH)</label>
+                            <input type="number" id="discount" min="0" step="0.01" value="0">
+                        </div>
+                        
+                        <button id="addItem" class="add-button">Add Item</button>
+                    </div>
+                </div>
+                
+                <!-- Invoice Preview -->
+                <aside class="preview-section">
+                    <div class="invoice-preview" id="invoicePreview">
+                        <div class="invoice-header">
+                            <div class="invoice-title">
+                                <h2>INVOICE</h2>
+                                <div class="invoice-meta">
+                                    <p><strong>Invoice #:</strong> <span id="previewInvoiceNumber">-</span></p>
+                                    <p><strong>Date:</strong> <span id="previewInvoiceDate">-</span></p>
+                                </div>
+                            </div>
+
+                            <div class="business-info">
+                                <h3 id="previewBusinessName">Your Business Name</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="invoice-parties">
+                            <div class="from-to">
+                                <div class="from">
+                                    <h4>From:</h4>
+                                    <p id="previewFrom">Your Business Name</p>
+                                </div>
+                                <div class="to">
+                                    <h4>To:</h4>
+                                    <p id="previewTo">Customer Name</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="invoice-items">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Tax</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoiceItems">
+                                    <tr class="no-items">
+                                        <td colspan="5">No items added yet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="invoice-totals">
+                            <div class="totals-row">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+
+                            <div class="totals-row">
+                                <span>Tax:</span>
+                                <span id="taxTotal">$0.00</span>
+                            </div>
+
+                            <div class="totals-row">
+                                <span>Discount:</span>
+                                <span id="discountTotal">$0.00</span>
+                            </div>
+
+                            <div class="totals-row grand-total">
+                                <span>Total:</span>
+                                <span id="grandTotal">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="invoice-footer">
+                            <p>Thank you for your business!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="downloadPdf" class="download-button">Download as PDF</button>
+                        <button id="clearInvoice" class="clear-button">Clear Invoice</button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>QuickBill</h3>
+                    <p>Simple, fast, and clean digital billing for small businesses.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#generator">Invoice Generator</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li>Instant Invoice Generation</li>
+                        <li>PDF Download</li>
+                        <li>Mobile Friendly</li>
+                        <li>No Signup Required</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 QuickBill. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="script.js" defer></script>
+</body>
+</html>
