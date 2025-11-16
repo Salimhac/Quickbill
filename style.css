@@ -490,3 +490,29 @@ body {
         padding: 1.5rem;
     }
 }
+.contact-btn {
+    display: inline-block;
+    margin: 8px 0;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.whatsapp-btn {
+    background: #25D366;
+}
+
+.whatsapp-btn:hover {
+    background: #1ebd5a;
+}
+
+.instagram-btn {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.instagram-btn:hover {
+    opacity: 0.85;
+}
