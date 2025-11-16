@@ -251,19 +251,25 @@ body {
     gap: 1.5rem;
 }
 
+/* Invoice Preview */
 .invoice-preview {
     background-color: var(--white);
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
 
-    /* Add these */
-    width: 794px;   /* Approx A4 width in px */
-    max-width: 100%; 
-    min-height: 1122px;  /* Approx A4 height */
+    /* Maintain responsive max width for mobile */
+    max-width: 100%;
     display: block;
 }
 
+/* Temporary PDF Export Class */
+.invoice-preview.pdf-export {
+    width: 794px;        /* A4 width in px */
+    min-height: 1123px;  /* A4 height in px */
+    padding: 2rem;
+    box-shadow: none;    /* Clean PDF without shadows */
+}
 
 .invoice-header {
     display: flex;

@@ -282,7 +282,7 @@ function formatCurrency(amount) {
     }).format(amount);
 }
 
-function downloadPdf() {
+async function downloadPdf() {
     const invoiceElement = document.getElementById('invoicePreview');
 
     if (!invoiceElement) {
@@ -290,9 +290,40 @@ function downloadPdf() {
         return;
     }
 
-    // Ensure preview is visible
-    invoiceElement.style.display = 'block';
+    if (!invoiceData.businessName || invoiceData.businessName === 'Your Business Name') {
+        alert('Please enter your business name');
+        businessNameInput.focus();
+        return;
+    }
 
+    if (!invoiceData.customerName || invoiceData.customerName === 'Customer Name') {
+        alert('Please enter customer name');
+        customerNameInput.focus();
+        return;
+    }
+
+    if (invoiceData.items.length === 0) {
+        alert('Please add at least one item to the invoice');
+        itemNameInput.focus();
+        return;
+    }
+
+    // Clone invoice for PDF export
+    const clone = invoiceElement.cloneNode(true);
+    clone.style.width = '794px';      // A4 width
+    clone.style.minHeight = '1123px'; // A4 height
+    clone.style.padding = '2rem';
+    clone.style.boxShadow = 'none';
+    clone.style.backgroundColor = '#fff';
+    clone.style.display = 'block';
+    clone.id = 'invoicePdfClone';
+
+    // Append clone to body (off-screen)
+    clone.style.position = 'absolute';
+    clone.style.left = '-9999px';
+    document.body.appendChild(clone);
+
+    // Generate PDF from clone
     const options = {
         margin: 10,
         filename: `invoice-${invoiceData.invoiceNumber || 'quickbill'}.pdf`,
@@ -301,8 +332,12 @@ function downloadPdf() {
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    // Give UI time to update before creating PDF
-    setTimeout(() => {
-        html2pdf().from(invoiceElement).set(options).save();
-    }, 300);
+    try {
+        await html2pdf().from(clone).set(options).save();
+    } catch (err) {
+        console.error('PDF generation failed:', err);
+    } finally {
+        // Remove clone
+        document.body.removeChild(clone);
+    }
 }
