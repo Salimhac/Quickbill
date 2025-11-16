@@ -282,39 +282,27 @@ function formatCurrency(amount) {
     }).format(amount);
 }
 
-// Download PDF
 function downloadPdf() {
-    // Validate required fields
-    if (!invoiceData.businessName || invoiceData.businessName === 'Your Business Name') {
-        alert('Please enter your business name');
-        businessNameInput.focus();
-        return;
-    }
-    
-    if (!invoiceData.customerName || invoiceData.customerName === 'Customer Name') {
-        alert('Please enter customer name');
-        customerNameInput.focus();
-        return;
-    }
-    
-    if (invoiceData.items.length === 0) {
-        alert('Please add at least one item to the invoice');
-        itemNameInput.focus();
-        return;
-    }
-    
-    // Get the invoice preview element
     const invoiceElement = document.getElementById('invoicePreview');
-    
-    // Options for PDF generation
+
+    if (!invoiceElement) {
+        alert('Invoice preview not found!');
+        return;
+    }
+
+    // Ensure preview is visible
+    invoiceElement.style.display = 'block';
+
     const options = {
         margin: 10,
         filename: `invoice-${invoiceData.invoiceNumber || 'quickbill'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
+        html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
-    
-    // Generate and download PDF
-    html2pdf().from(invoiceElement).set(options).save();
+
+    // Give UI time to update before creating PDF
+    setTimeout(() => {
+        html2pdf().from(invoiceElement).set(options).save();
+    }, 300);
 }

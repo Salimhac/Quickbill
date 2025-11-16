@@ -256,7 +256,14 @@ body {
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
+
+    /* Add these */
+    width: 794px;   /* Approx A4 width in px */
+    max-width: 100%; 
+    min-height: 1122px;  /* Approx A4 height */
+    display: block;
 }
+
 
 .invoice-header {
     display: flex;
